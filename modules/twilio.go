@@ -17,7 +17,7 @@ func init() {
 
 }
 
-func sendSMS(message string) {
+func SendSMS(message string) {
 	from := os.Getenv("TWILIO_FROM_PHONE_NUMBER")
 	to := os.Getenv("TWILIO_TO_PHONE_NUMBER")
 	params := &openapi.CreateMessageParams{}
