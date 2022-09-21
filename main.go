@@ -29,7 +29,7 @@ var locations = []location{
 	},
 	{
 		id:    7740,
-		name:  "Milwaukee Office",
+		name:  "Milwaukee",
 		alert: true,
 	},
 	{
@@ -68,7 +68,6 @@ func main() {
 			log.Fatal(err)
 		}
 		jsonFormattedString, err := PrettyString(string(responseData))
-		fmt.Println(formattedUrl)
 		fmt.Println(jsonFormattedString)
 	}
 }
