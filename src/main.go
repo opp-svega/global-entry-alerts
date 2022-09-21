@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	// twilio "github.com/opp-svega/global-entry-alerts/src/modules/twilio"
 )
 
 type location struct {
@@ -67,7 +68,12 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
+		if len(responseData) > 0 {
+			fmt.Println("Greater than")
+		}
 		jsonFormattedString, err := PrettyString(string(responseData))
 		fmt.Println(jsonFormattedString)
 	}
+
+	//twilio.SendSMS("This actually fucking worked!")
 }

@@ -1,7 +1,8 @@
+//module github.com/opp-svega/global-entry-alerts/src/modules/twilio
+
 package twilio
 
 import (
-	"encoding/json"
 	"fmt"
 	"os"
 
@@ -29,7 +30,6 @@ func SendSMS(message string) {
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
-		response, _ := json.Marshal(*resp)
-		fmt.Println("Response: " + string(response))
+		fmt.Println("Message Sent")
 	}
 }
