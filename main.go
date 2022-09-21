@@ -39,6 +39,16 @@ var locations = []location{
 		name:  "Milwaukee Office",
 		alert: true,
 	},
+	{
+		id:    5023,
+		name:  "Detroit",
+		alert: false,
+	},
+	{
+		id:    7540,
+		name:  "Anchorage Alaska",
+		alert: false,
+	},
 }
 
 func futureTime() time.Time {
@@ -55,18 +65,22 @@ func PrettyString(str string) (string, error) {
 }
 
 func main() {
-	formattedUrl := fmt.Sprintf("https://ttp.cbp.dhs.gov/schedulerapi/slots/asLocations?minimum=1&filterTimestampBy=before&timestamp=%s&serviceName=GlobalEntry", futureTime().Format(YYYYMMDD))
-	response, err := http.Get(formattedUrl)
 
-	if err != nil {
-		fmt.Print(err.Error())
-		os.Exit(1)
+	for _, element := range locations {
+
+		formattedUrl := fmt.Sprintf("https://ttp.cbp.dhs.gov/schedulerapi/slots?orderBy=soonest&limit=1&locationId=%d&minimum=1", element.id)
+		response, err := http.Get(formattedUrl)
+
+		if err != nil {
+			fmt.Print(err.Error())
+			os.Exit(1)
+		}
+		responseData, err := ioutil.ReadAll(response.Body)
+		if err != nil {
+			log.Fatal(err)
+		}
+		jsonFormattedString, err := PrettyString(string(responseData))
+		fmt.Println(formattedUrl)
+		fmt.Println(jsonFormattedString)
 	}
-	responseData, err := ioutil.ReadAll(response.Body)
-	if err != nil {
-		log.Fatal(err)
-	}
-	jsonFormattedString, err := PrettyString(string(responseData))
-	fmt.Println(formattedUrl)
-	fmt.Println(jsonFormattedString)
 }
