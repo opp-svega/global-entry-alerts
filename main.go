@@ -8,8 +8,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-
-	twilioStuff "github.com/opp-svega/global-entry-alerts/modules"
 )
 
 type location struct {
@@ -72,5 +70,4 @@ func main() {
 		jsonFormattedString, err := PrettyString(string(responseData))
 		fmt.Println(jsonFormattedString)
 	}
-	twilioStuff.SendSMS()
 }
