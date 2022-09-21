@@ -1,4 +1,4 @@
-module github.com/opp-svega/global-entry-alerts
+module github.com/opp-svega/global-entry-alerts/src
 
 go 1.19
 
