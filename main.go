@@ -8,13 +8,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"time"
-)
-
-const (
-	ttpUrl    = "https://ttp.cbp.dhs.gov/schedulerapi/slots/asLocations?minimum=1&filterTimestampBy=before&timestamp=%s&serviceName=Global%20Entry"
-	daysDelta = 28
-	YYYYMMDD  = "2006-01-02"
 )
 
 type location struct {
@@ -49,11 +42,6 @@ var locations = []location{
 		name:  "Anchorage Alaska",
 		alert: false,
 	},
-}
-
-func futureTime() time.Time {
-	// Return the future time struct offset by daysDelta
-	return time.Now().AddDate(0, 0, daysDelta)
 }
 
 func PrettyString(str string) (string, error) {
