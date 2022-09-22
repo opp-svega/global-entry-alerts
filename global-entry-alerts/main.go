@@ -8,7 +8,7 @@ import (
 	"log"
 	"net/http"
 
-	twilio "github.com/opp-svega/global-entry-alerts/src/modules/twilio"
+	twilio "github.com/opp-svega/global-entry-alerts/global-entry-alerts/modules/twilio"
 )
 
 type location struct {
@@ -83,10 +83,10 @@ func main() {
 		var locationData []data
 		json.Unmarshal(responseData, &locationData)
 		element.outputData = locationData
-		if len(locationData) > 0 && element.alert == false {
+		if len(locationData) > 0 && element.alert == true {
 			msg := fmt.Sprintf("Global Entry Appointment Found\nLocation: %s\nLocation ID: %d\nStart Time: %s", element.name, element.id, element.outputData[0].StartTimestamp)
-			fmt.Printf(msg)
-			twilio.SendSMS("This actually fucking worked!")
+			log.Println(msg)
+			twilio.SendSMS(msg)
 		}
 	}
 }
