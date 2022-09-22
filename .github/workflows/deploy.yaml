@@ -1,0 +1,32 @@
+name: 'Alert End User'
+
+on:
+  schedule: 
+    - cron: "00 /2 * * *"
+  workflow_dispatch:
+
+jobs:
+  alert:
+    runs-on: ubuntu-latest
+    name: Build and Run
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.19
+      
+      - name: Build Binary
+        run: go build 
+
+      - name: Run Binary
+        env:
+          TWILIO_FROM_PHONE_NUMBER: ${{ secrets.TWILIO_FROM_PHONE_NUMBER }}
+          TWILIO_TO_PHONE_NUMBER: ${{ secrets.TWILIO_TO_PHONE_NUMBER }}
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+        run: ./global-entry-alerts
+
+# Mobile number you wish to recieve text messages to
+export TWILIO_TO_PHONE_NUMBER=""
