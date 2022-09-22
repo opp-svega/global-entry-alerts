@@ -26,7 +26,5 @@ jobs:
           TWILIO_TO_PHONE_NUMBER: ${{ secrets.TWILIO_TO_PHONE_NUMBER }}
           TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
           TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
-        run: ./global-entry-alerts
-
-# Mobile number you wish to recieve text messages to
-export TWILIO_TO_PHONE_NUMBER=""
+        run: |
+          ./global-entry-alerts
