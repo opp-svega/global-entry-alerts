@@ -1,4 +1,4 @@
-//module github.com/opp-svega/global-entry-alerts/global-entry-alerts/modules/twilio
+//module github.com/opp-svega/global-entry-alerts/pkg/twilio
 
 package twilio
 
@@ -41,7 +41,10 @@ func SendSMS(message string) {
 	} else {
 
 		response, _ := json.Marshal(*resp)
-		json.Unmarshal(response, &responseData)
+		err = json.Unmarshal(response, &responseData)
+		if err != nil {
+			log.Fatal(err)
+		}
 		logMessage := fmt.Sprintf("SMS Message is %s at %s", responseData.Status, responseData.DateUpdated)
 		log.Println(logMessage)
 	}

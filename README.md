@@ -19,13 +19,11 @@ export TWILIO_TO_PHONE_NUMBER=""
 ## How to run
 Just running the application
 ```
-cd src
 go run main.go
 ```
 
 Building an then running
 ```
-cd src
 go build 
 ./global-entry-alerts
 ```

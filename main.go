@@ -1,14 +1,13 @@
 package main
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 
-	twilio "github.com/opp-svega/global-entry-alerts/global-entry-alerts/modules/twilio"
+	twilio "github.com/opp-svega/global-entry-alerts/pkg/twilio"
 )
 
 type location struct {
@@ -57,14 +56,6 @@ var locations = []location{
 	},
 }
 
-func PrettyString(str string) (string, error) {
-	var prettyJSON bytes.Buffer
-	if err := json.Indent(&prettyJSON, []byte(str), "", "    "); err != nil {
-		return "", err
-	}
-	return prettyJSON.String(), nil
-}
-
 func main() {
 
 	for _, element := range locations {
@@ -81,7 +72,11 @@ func main() {
 		}
 
 		var locationData []data
-		json.Unmarshal(responseData, &locationData)
+		err = json.Unmarshal(responseData, &locationData)
+		if err != nil {
+			log.Fatal(err)
+		}
+
 		element.outputData = locationData
 		if len(locationData) > 0 && element.alert == true {
 			msg := fmt.Sprintf("Global Entry Appointment Found\nLocation: %s\nLocation ID: %d\nStart Time: %s", element.name, element.id, element.outputData[0].StartTimestamp)
