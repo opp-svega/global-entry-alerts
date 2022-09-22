@@ -27,4 +27,5 @@ Building an then running
 ```
 cd src
 go build 
+./global-entry-alerts
 ```
