@@ -45,7 +45,7 @@ func SendSMS(message string) {
 		if err != nil {
 			log.Fatal(err)
 		}
-		logMessage := fmt.Sprintf("SMS Message is %s at %s", responseData.Status, responseData.DateUpdated)
+		logMessage := fmt.Sprintf("SMS Message is in status of %s at %s", responseData.Status, responseData.DateUpdated)
 		log.Println(logMessage)
 	}
 }
