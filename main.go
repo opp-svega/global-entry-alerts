@@ -58,6 +58,7 @@ var locations = []location{
 
 func main() {
 
+	log.Println("Checking all hardcoded locations...")
 	for _, element := range locations {
 
 		formattedUrl := fmt.Sprintf("https://ttp.cbp.dhs.gov/schedulerapi/slots?orderBy=soonest&limit=1&locationId=%d&minimum=1", element.id)
