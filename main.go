@@ -79,7 +79,7 @@ func main() {
 		}
 
 		element.outputData = locationData
-		if len(locationData) > 0 && element.alert == true {
+		if len(locationData) > 0 && element.alert == false {
 			msg := fmt.Sprintf("Global Entry Appointment Found\nLocation: %s\nLocation ID: %d\nStart Time: %s", element.name, element.id, element.outputData[0].StartTimestamp)
 			log.Println(msg)
 			twilio.SendSMS(msg)
