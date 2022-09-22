@@ -3,6 +3,7 @@
 package twilio
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 
@@ -30,6 +31,7 @@ func SendSMS(message string) {
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
-		fmt.Println("Message Sent")
+		response, _ := json.Marshal(*resp)
+		fmt.Println("Response: " + string(response))
 	}
 }

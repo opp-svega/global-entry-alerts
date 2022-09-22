@@ -7,14 +7,24 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
-	// twilio "github.com/opp-svega/global-entry-alerts/src/modules/twilio"
+
+	twilio "github.com/opp-svega/global-entry-alerts/src/modules/twilio"
 )
 
 type location struct {
-	id    int
-	name  string
-	alert bool
+	id         int
+	name       string
+	alert      bool
+	outputData []data
+}
+
+type data struct {
+	LocationId     int    `json:"locationId"`
+	StartTimestamp string `json:"startTimestamp"`
+	EndTimestamp   string `json:"endTimestamp"`
+	Active         bool   `json:"active"`
+	Duration       int    `json:"duration"`
+	RemoteInd      bool   `json:"remoteInd"`
 }
 
 var locations = []location{
@@ -33,6 +43,8 @@ var locations = []location{
 		name:  "Milwaukee",
 		alert: true,
 	},
+	// Next Two Locations are just tests to ensure we pull back any results.
+	// Anchorage Alaska has been pretty good about keeping locations open.
 	{
 		id:    5023,
 		name:  "Detroit",
@@ -61,19 +73,20 @@ func main() {
 		response, err := http.Get(formattedUrl)
 
 		if err != nil {
-			fmt.Print(err.Error())
-			os.Exit(1)
+			log.Fatal(err)
 		}
 		responseData, err := ioutil.ReadAll(response.Body)
 		if err != nil {
 			log.Fatal(err)
 		}
-		if len(responseData) > 0 {
-			fmt.Println("Greater than")
-		}
-		jsonFormattedString, err := PrettyString(string(responseData))
-		fmt.Println(jsonFormattedString)
-	}
 
-	//twilio.SendSMS("This actually fucking worked!")
+		var locationData []data
+		json.Unmarshal(responseData, &locationData)
+		element.outputData = locationData
+		if len(locationData) > 0 && element.alert == false {
+			msg := fmt.Sprintf("Global Entry Appointment Found\nLocation: %s\nLocation ID: %d\nStart Time: %s", element.name, element.id, element.outputData[0].StartTimestamp)
+			fmt.Printf(msg)
+			twilio.SendSMS("This actually fucking worked!")
+		}
+	}
 }
