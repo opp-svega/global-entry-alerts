@@ -42,6 +42,16 @@ var locations = []location{
 		name:  "Milwaukee",
 		alert: true,
 	},
+	{
+		id:    11001,
+		name:  "Rockford-Chicago International Airport",
+		alert: true,
+	},
+	{
+		id:    11002,
+		name:  "Peoria International Airport",
+		alert: true,
+	},
 	// Next Two Locations are just tests to ensure we pull back any results.
 	// Anchorage Alaska has been pretty good about keeping locations open.
 	{
